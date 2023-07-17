@@ -1,28 +1,31 @@
 import random
 
 
+"""
+Follow up: Does the DS contain duplicates?, does it have to keep the order of insert
+"""
+
 class MyDS:
     
     
-    def __init__(self) -> None:
+    def __init__(self):
         self.arr = []
         self.hmap = {}
     
     
     def add(self, ele):
         idx = self.hmap.get(ele, None)
+        print(idx)
         if idx is not None:
-            return False
+            raise Exception('Cannot add')
         self.arr.append(ele)
         self.hmap[ele] = len(self.arr) -1
-        return True
         
     def remove(self, ele):
         idx = self.hmap.get(ele, None)
         if idx is not None:
-            return False
+            raise Exception('Cannot remove')
         # Delete the element
-        del self.hmap[ele]
         
         #Begin swap
         last_ele = self.arr[-1]
@@ -35,21 +38,20 @@ class MyDS:
         #Delete the last element at the moment
         del self.hmap[ele]
         self.arr.pop()
-        return True
+        
+        
+    def __str__(self) -> str:
+        return f'Array: {self.arr}, Map: {self.hmap}'
         
         
     
     def remove_random(self, ele):
         ele = random.choice(self.arr)
-        return self.remove(ele=ele)
+        self.remove(ele=ele)
 
 
 if __name__ == '__main__':
-    
-    
     ds = MyDS()
-    ds.arr.append(1)
-    
-    
-    ds2 = MyDS()
-    print(ds.arr, ds2.arr)
+    ds.add(1)
+    ds.add(2)
+    print(ds)
