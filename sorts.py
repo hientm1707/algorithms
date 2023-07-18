@@ -10,6 +10,10 @@ def selection_sort(lst):
                 min_idx = j
         lst[i], lst[min_idx] = lst[min_idx], lst[i]
     return lst
+
+
+
+
         
 selection_sort(input)
 print(input)
