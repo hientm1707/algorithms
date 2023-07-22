@@ -1,0 +1,55 @@
+
+from collections import defaultdict
+#Too lazy to write the function name
+def foo(arr, k):
+    '''
+    Given an array of integers, return the minimum subarray with exactly k distinct numbers'
+    '''
+    n = len(arr)
+    start, end = 0, n  #Pointer to keep the current minimum subarray ( initialize to len(arr) + 1)
+    l, r = 0, -1
+    frequencies = defaultdict(int)
+    while l < n:
+        while r <n:
+            r+=1
+            if len(frequencies) < k  and r < n:
+                frequencies[arr[r]] += 1
+            if len(frequencies) == k  and (end - start) >= (r - l):
+                end, start = r, l
+                break; #If we go further we cant get the minimum
+        if len(frequencies) < k:
+            break #After traversing the whole array, we could not get the resulting subarray, break the loop
+        
+        # if distinct elements equals to k then
+        # try to increment left side.
+        # Cases like  111123567
+        while len(frequencies) == k:
+            if frequencies[arr[l]] == 1:
+                del frequencies[arr[l]]
+            else:
+                frequencies[arr[l]] -=1
+            l+=1
+            if len(frequencies) == k and (end - start) >= (r - l):
+                end, start = r, l
+        if frequencies[arr[l]] == 1 :
+            del frequencies[arr[l]]
+        else:
+            frequencies[arr[l]] -=1
+        l+=1   
+    # print(start, end)
+    if start == 0 and end == n: ## If start and end dont change, the invalid result
+        raise ValueError('Invalid K')
+    print(start, end)
+    return start, end
+
+
+def test():
+    arr = [1, 1, 2, 2, 3, 3, 4, 5] 
+    k = 3
+    return foo(arr, k)
+
+print(test())
+
+        
+              
+            
